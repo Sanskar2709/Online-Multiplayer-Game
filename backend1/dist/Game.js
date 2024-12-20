@@ -23,10 +23,10 @@ class Game {
         }));
     }
     makeMove(socket, move) {
-        if (this.board.moves.length % 2 === 0 && socket !== this.player1) {
+        if (this.moveCount % 2 === 0 && socket !== this.player1) {
             return;
         }
-        if (this.board.moves.length % 2 === 1 && socket !== this.player2) {
+        if (this.moveCount % 2 === 1 && socket !== this.player2) {
             return;
         }
         try {
@@ -50,18 +50,19 @@ class Game {
             }));
             return;
         }
-        if (this.board.moves.length % 2 === 0) {
-            this.player2.emit(JSON.stringify({
+        if (this.moveCount % 2 === 0) {
+            this.player2.send(JSON.stringify({
                 type: messages_1.MOVE,
                 payload: move
             }));
         }
         else {
-            this.player1.emit(JSON.stringify({
+            this.player1.send(JSON.stringify({
                 type: messages_1.MOVE,
                 payload: move
             }));
         }
+        this.moveCount++;
     }
 }
 exports.Game = Game;
